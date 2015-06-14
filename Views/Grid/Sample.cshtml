@@ -5,34 +5,27 @@
 
 @section Scripts
 {
-    <script type="text/javascript">
-        var app = angular.module('myAppp', []);
-        app.controller('custCtrl', function ($scope, $http) {
-            $scope.description = "";
-            $scope.setting = function (value) {
-                $scope.description = value;
-
-            }
-
-        });
     
-    
-    </script>
 }
 
 <h2>Sample</h2>
 
-<div ng-app="myAppp" ng-controller="custCtrl">
-    <div class="radio">
-        <label>
-            <input type="radio" name="a" ng-model="x" ng-change="setting('First')"> First 
-        </label>
+<button class="btn btn-primary" data-toggle="modal" data-target="#myModal"> Click!!</button>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModal-label">Rejection </h4>
+            </div>
+            <div class="modal-body" >
+                <p>@{Html.RenderPartial("Rejection");}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
     </div>
-    <div class="radio">
-        <label>
-            <input type="radio" name="a">
-            second
-        </label>
-    </div>
-    <input type="hidden" value="{{$scope.description}}" />    
 </div>

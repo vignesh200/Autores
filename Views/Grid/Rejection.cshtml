@@ -3,63 +3,12 @@
 }
 @section Scripts
 {
-    <script type="text/javascript">
-        var app = angular.module('myApp', []);
-        app.controller('customersCtrl', function ($scope, $http) {
-            $scope.legalother = "";
-            $scope.legal = "";
-            $scope.county = "";
-            $scope.attachments = "";
-            $scope.names = ["LegalRejetion", "CountyRejection", "AttachmentRejection"]
-            $scope.boxclears = [$scope.clear1, $scope.clear2, $scope.clear3];
-            $scope.rejectList = [$scope.legal, $scope.county, $scope.attachments];
-
-            $scope.allClear = function (no) {
-                $scope.rejectList[no] = "";
-                $scope.boxclears[no] = "";
-                $scope.isShow(false, false)
-            }
-
-            $scope.setting = function (no, value) {
-                if (value == "" || value == null || value == undefined) {
-                    return;
-                }
-                var str = $scope.rejectList[no];
-                if (str.indexOf(value) >= 0) {
-                    $scope.rejectList[no] = str.replace(value + "^", "");
-                }
-                else {
-                    $scope.rejectList[no] = $scope.rejectList[no] + value + "^"
-                }
-
-            }
-
-            $scope.isShow = function (a, b) {
-
-                if (b) {
-                    if (a) {
-                        return true;
-                    }
-                }
-                else {
-                    return false;
-                }
-            }
-
-            $http.get("/grid/rejectiondata")
-            .success(function (response) {
-                $scope.rejectHeads = response.metadata;
-                $scope.rejectReasons = response.data;
-                //alert($scope.rejectReasons[1]);
-            });
-        });
-
-    </script>
+  
 }
 <h2>Rejection</h2>
 
 <form action="/grid/rejectresult" method="post">
-    <div class="panel panel-primary ng-scope" ng-app="myApp" ng-controller="customersCtrl">
+    <div class="panel panel-primary" ng-app="myApp" ng-controller="customersCtrl">
         <div class="panel-heading">
             <h3 class="panel-title">Rejection Reasons</h3>
         </div>
@@ -71,12 +20,12 @@
                 </center> <br>
                 The attached Residential Property Report (RPR No. referenced above) cannot be completed for the reason(s) checked below:
             </div>
-            <div ng-repeat="rejectHead in rejectHeads track by $index" ng-init="indexvar=$index" class="ng-scope">
+            <div ng-repeat="rejectHead in rejectHeads track by $index" ng-init="indexvar=$index">
 
                 <label><input type="checkbox" ng-model="checked" ng-change="allClear($index)"> {{$index+1}}. {{rejectHead}} </label>
-                <div class="col-md-offset-1 col-md-11 ng-scope" ng-repeat="rejectReason in rejectReasons[$index] track by $index">
+                <div class="col-md-offset-1 col-md-11" ng-repeat="rejectReason in rejectReasons[$index] track by $index">
 
-                    <div ng-if="!(rejectReason=='Other')" class="ng-scope">
+                    <div ng-if="!(rejectReason=='Other')">
                         <div class="checkbox">
                             <label class="ng-binding">
                                 <input type="checkbox" ng-disabled="!checked" ng-click="setting(indexvar,rejectReason)" ng-checked="checked && 0" value="{{rejectReason}}">
@@ -85,7 +34,7 @@
                         </div>
                     </div>
 
-                    <div ng-if="rejectReason=='Other'" class="ng-scope">
+                    <div ng-if="rejectReason=='Other'">
                         <div class="checkbox">
                             <label class="ng-binding">
                                 <input type="checkbox" ng-disabled="!checked" ng-change="setting(indexvar,boxclears[indexvar])" ng-checked="(checked && false)" value="{{rejectReason}}" ng-model="a">
@@ -94,10 +43,11 @@
                         </div>
                         <input type="text" class="form-control" ng-show="(a || !checked) && checked" ng-model="boxclears[indexvar]" ng-blur="setting(indexvar,boxclears[indexvar])" ng-focus="setting(indexvar,boxclears[indexvar])">
                     </div>
-                    </div>
+                </div>
                 <input type="hidden" name="{{names[indexvar]}}" value="{{rejectList[indexvar]}}">
             </div>
         </div>
+        <button type="submit" disabled>Submit</button>
     </div>
-    <button type="submit">Submit</button>
+
 </form>
