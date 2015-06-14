@@ -3,7 +3,9 @@
 }
 @section Scripts
 {
-  
+  <script type="text/javascript">
+      
+    </script>
 }
 <h2>Rejection</h2>
 
@@ -37,17 +39,17 @@
                     <div ng-if="rejectReason=='Other'">
                         <div class="checkbox">
                             <label class="ng-binding">
-                                <input type="checkbox" ng-disabled="!checked" ng-change="setting(indexvar,boxclears[indexvar])" ng-checked="(checked && false)" value="{{rejectReason}}" ng-model="a">
+                                <input type="checkbox"  ng-disabled="!checked" ng-change="setting(indexvar,boxclears[indexvar])" ng-checked="(checked && false)" value="{{rejectReason}}" ng-model="a">
                                 {{$index+1}}. {{rejectReason}}
                             </label>
                         </div>
-                        <input type="text" class="form-control" ng-show="(a || !checked) && checked" ng-model="boxclears[indexvar]" ng-blur="setting(indexvar,boxclears[indexvar])" ng-focus="setting(indexvar,boxclears[indexvar])">
+                        <input type="text" class="form-control txtchange" ng-show="(a || !checked) && checked" ng-change="txtchanges(boxclears[indexvar])" ng-model="boxclears[indexvar]" ng-blur="setting(indexvar,boxclears[indexvar])" ng-focus="setting(indexvar,boxclears[indexvar])">
                     </div>
                 </div>
                 <input type="hidden" name="{{names[indexvar]}}" value="{{rejectList[indexvar]}}">
             </div>
         </div>
-        <button type="submit" disabled>Submit</button>
+        <button id="rejectsubmit" type="submit" disabled>Submit</button>
     </div>
 
 </form>

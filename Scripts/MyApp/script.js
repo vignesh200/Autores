@@ -1,4 +1,7 @@
 ﻿var app = angular.module('myApp', []);
+$(".txtchange").change(function () {
+    $("button").removeAttr("disabled");
+})
 app.controller('customersCtrl', function ($scope, $http) {
     $scope.legalother = "";
     $scope.legal = "";
@@ -7,14 +10,23 @@ app.controller('customersCtrl', function ($scope, $http) {
     $scope.names = ["LegalRejetion", "CountyRejection", "AttachmentRejection"]
     $scope.boxclears = [$scope.clear1, $scope.clear2, $scope.clear3];
     $scope.rejectList = [$scope.legal, $scope.county, $scope.attachments];
+    $scope.txtchanges=function(value)
+    {
+        if (value != "") {
+            $("#rejectsubmit").removeAttr("disabled");
+        }
+        else if(value=="") {
+            $("#rejectsubmit").attr("disabled", "disabled");
+        }
+    }
     $scope.canSubmit = function () {
         //alert(($scope.rejectList + $scope.rejectList + $scope.rejectList) == "");
        // alert(($("input[name='LegalRejetion']").val() + $("input[name='CountyRejection']").val() + $("input[name='AttachmentRejection']").val()) == "");
       
         if (($scope.rejectList[0] + $scope.rejectList[1] + $scope.rejectList[2]) == "") {
-            $("button").attr("disabled", "disabled");
+            $("#rejectsubmit").attr("disabled", "disabled");
         } else {
-            $("button").removeAttr("disabled");
+            $("#rejectsubmit").removeAttr("disabled");
         }
     }
         $scope.allClear = function (no) {
