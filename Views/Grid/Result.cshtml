@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Result";
+    
+}
+
+<h2>Result</h2>
+<ol>
+    @{
+        string[] s = Model.LegalRejetion.Split('^');
+        
+    }
+
+    @foreach (string f in s)
+    {
+        if((@String.Compare(f,""))!=0)
+            {
+        <li>@f</li>
+    }
+    }
+</ol>
